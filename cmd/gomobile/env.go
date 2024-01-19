@@ -32,11 +32,11 @@ func isApplePlatform(platform string) bool {
 	return contains(applePlatforms, platform)
 }
 
-var applePlatforms = []string{"ios", "iossimulator", "macos", "maccatalyst", "tvos", "tvossimulator"}
+var applePlatforms = []string{"ios", "iossimulator", "macos", "maccatalyst", "tvos", "tvossimulator", "xros", "xrossimulator"}
 
 func platformArchs(platform string) []string {
 	switch platform {
-	case "ios", "tvos", "tvossimulator":
+	case "ios", "tvos", "tvossimulator", "xros", "xrossimulator":
 		return []string{"arm64"}
 	case "iossimulator":
 		return []string{"arm64", "amd64"}
@@ -68,6 +68,8 @@ func platformOS(platform string) string {
 		return "darwin"
 	case "tvos", "tvossimulator":
 		return "ios"
+	case "xros", "xrossimulator":
+		return "ios"
 	default:
 		panic(fmt.Sprintf("unexpected platform: %s", platform))
 	}
@@ -97,6 +99,8 @@ func platformTags(platform string) []string {
 		return []string{"ios", "macos", "maccatalyst"}
 	case "tvos", "tvossimulator":
 		return []string{"tvos"}
+	case "xros", "xrossimulator":
+		return []string{"xros"}
 	default:
 		panic(fmt.Sprintf("unexpected platform: %s", platform))
 	}
@@ -266,6 +270,18 @@ func envInit() (err error) {
 			case "tvossimulator":
 				goos = "ios"
 				sdk = "appletvsimulator"
+				clang, cflags, err = envClang(sdk)
+				// cflags += " -mios-simulator-version-min=" + buildIOSVersion
+				cflags += " -fembed-bitcode"
+			case "xros":
+				goos = "ios"
+				sdk = "xros"
+				clang, cflags, err = envClang(sdk)
+				// cflags += " -miphoneos-version-min=" + buildIOSVersion
+				cflags += " -fembed-bitcode"
+			case "xrossimulator":
+				goos = "ios"
+				sdk = "xrsimulator"
 				clang, cflags, err = envClang(sdk)
 				// cflags += " -mios-simulator-version-min=" + buildIOSVersion
 				cflags += " -fembed-bitcode"
