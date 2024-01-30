@@ -245,7 +245,7 @@ func envInit() (err error) {
 				// cflags += " -iframework " + sysroot + "/System/iOSSupport/System/Library/Frameworks"
 				switch arch {
 				case "amd64":
-					cflags += " -target x86_64-apple-ios" + buildIOS	Version + "-macabi"
+					cflags += " -target x86_64-apple-ios" + buildIOSVersion + "-macabi"
 				case "arm64":
 					cflags += " -target arm64-apple-ios" + buildIOSVersion + "-macabi"
 					cflags += " -fembed-bitcode"
