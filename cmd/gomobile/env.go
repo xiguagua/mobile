@@ -266,12 +266,14 @@ func envInit() (err error) {
 				sdk = "appletvos"
 				clang, cflags, err = envClang(sdk)
 				// cflags += " -miphoneos-version-min=" + buildIOSVersion
+				cflags += " -target arm64-apple-tvos17.0"
 				cflags += " -fembed-bitcode"
 			case "tvossimulator":
 				goos = "ios"
 				sdk = "appletvsimulator"
 				clang, cflags, err = envClang(sdk)
 				// cflags += " -mios-simulator-version-min=" + buildIOSVersion
+				cflags += " -target arm64-apple-tvos17.0-simulator"
 				cflags += " -fembed-bitcode"
 			case "xros":
 				goos = "ios"
