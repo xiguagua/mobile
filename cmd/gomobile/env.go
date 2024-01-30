@@ -245,7 +245,7 @@ func envInit() (err error) {
 				// cflags += " -iframework " + sysroot + "/System/iOSSupport/System/Library/Frameworks"
 				switch arch {
 				case "amd64":
-					cflags += " -target x86_64-apple-ios" + buildIOSVersion + "-macabi"
+					cflags += " -target x86_64-apple-ios" + buildIOS	Version + "-macabi"
 				case "arm64":
 					cflags += " -target arm64-apple-ios" + buildIOSVersion + "-macabi"
 					cflags += " -fembed-bitcode"
@@ -262,12 +262,14 @@ func envInit() (err error) {
 				sdk = "appletvos"
 				clang, cflags, err = envClang(sdk)
 				// cflags += " -miphoneos-version-min=" + buildIOSVersion
+				cflags += " -target arm64-apple-tvos17.0"
 				cflags += " -fembed-bitcode"
 			case "tvossimulator":
 				goos = "ios"
 				sdk = "appletvsimulator"
 				clang, cflags, err = envClang(sdk)
 				// cflags += " -mios-simulator-version-min=" + buildIOSVersion
+				cflags += " -target arm64-apple-tvos17.0-simulator"
 				cflags += " -fembed-bitcode"
 			default:
 				panic(fmt.Errorf("unknown Apple target: %s/%s", platform, arch))
