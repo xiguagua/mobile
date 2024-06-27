@@ -328,6 +328,13 @@ func frameworkLayoutForTarget(t targetInfo, title string) (*frameworkLayout, err
 			modulePath:    "Modules",
 			infoPlistPath: ".",
 		}, nil
+	case "tvos", "tvossimulator":
+		return &frameworkLayout{
+			headerPath:    "Headers",
+			binaryPath:    ".",
+			modulePath:    "Modules",
+			infoPlistPath: ".",
+		}, nil
 	}
 
 	return nil, fmt.Errorf("unsupported platform %q", t.platform)
